@@ -1,7 +1,6 @@
 package leetcode
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -17,8 +16,6 @@ func Test_lengthOfLongestSubstring(t *testing.T) {
 		{"pwwkew", 3},
 		{"", 0},
 	}
-
-	fmt.Printf("------------------------Leetcode Problem 3------------------------\n")
 
 	for _, data := range cases {
 		result := lengthOfLongestSubstring(data.question)
