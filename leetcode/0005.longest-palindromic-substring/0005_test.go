@@ -9,7 +9,6 @@ type test0005 struct {
 
 func Test_longestPalindrome(t *testing.T) {
 	cases := []test0005{
-		{"aacabdkacaa", "aca"},
 		{"aaaaa", "aaaaa"},
 		{"aaaa", "aaaa"},
 		{"babad", "bab"},

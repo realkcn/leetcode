@@ -33,11 +33,11 @@ func longestPalindrome(s string) string {
 				newCount++
 			} else {
 				sameLen = 1
-			}
-			if i >= 2 && s[i] == s[i-2] {
-				curPalindromeLens[newCount] = 3
-				checkMax(curPalindromeLens[newCount], i-curPalindromeLens[newCount]+1)
-				newCount++
+				if i >= 2 && s[i] == s[i-2] {
+					curPalindromeLens[newCount] = 3
+					checkMax(curPalindromeLens[newCount], i-curPalindromeLens[newCount]+1)
+					newCount++
+				}
 			}
 			palindromeCount = newCount
 		}
