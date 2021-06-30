@@ -7,7 +7,7 @@ func numSimilarGroups(strs []string) int {
 	count := len(strs)
 	strLen := len(strs[0])
 	allStrMap := [300]charMap{}
-	likeMatrix := [300][300]bool{}
+	connectMatrix := [300][300]bool{}
 
 	for i := 0; i < strLen; i++ {
 		allStrMap[i] = make(charMap)
@@ -31,39 +31,33 @@ func numSimilarGroups(strs []string) int {
 		}
 		for i := 0; i < strIdx; i++ {
 			if equalMatrix[i] >= strLen-2 {
-				likeMatrix[i][strIdx] = true
-				likeMatrix[strIdx][i] = true
+				connectMatrix[i][strIdx] = true
+				connectMatrix[strIdx][i] = true
 			}
 		}
 	}
 	added := 1
 	result := 1
-	doingList := [300]int{}
-	doingStart := 0
-	doingLen := 1
+	doingList := []int{0}
 	var doneFlag [300]bool
 	doneFlag[0] = true
 	for true {
-		for doingLen > 0 {
-			curIdx := doingList[doingStart]
-			doingStart++
-			doingLen--
+		for len(doingList) > 0 {
+			curIdx := doingList[0]
+			doingList = doingList[1:]
 			for i := 0; i < count; i++ {
-				if i != curIdx && !doneFlag[i] && likeMatrix[i][curIdx] {
-					doingList[doingStart+doingLen] = i
+				if i != curIdx && !doneFlag[i] && connectMatrix[i][curIdx] {
 					doneFlag[i] = true
-					doingLen++
 					added++
+					doingList = append(doingList, i)
 				}
 			}
 		}
 		if added != count {
 			for i := 0; i < count; i++ {
 				if !doneFlag[i] {
-					doingList[0] = i
+					doingList = []int{i}
 					doneFlag[i] = true
-					doingStart = 0
-					doingLen = 1
 					added++
 					result++
 					break

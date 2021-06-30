@@ -9,7 +9,7 @@ type test0839 struct {
 	answer   int
 }
 
-func Test_numSimilarGroups(t *testing.T) {
+func BenchmarkNumSimilarGroups(t *testing.B) {
 	cases := []test0839{
 		{[]string{"jvhpg", "jhvpg", "hpvgj", "hvpgj", "vhgjp"}, 3},
 		{[]string{"nmiwx", "mniwx", "wminx", "mnixw", "xnmwi"}, 2},
@@ -17,11 +17,12 @@ func Test_numSimilarGroups(t *testing.T) {
 		{[]string{"tars", "rats", "arts", "star"}, 2},
 		{[]string{"omv", "ovm"}, 1},
 	}
-
-	for _, data := range cases {
-		result := numSimilarGroups(data.question)
-		if result != data.answer {
-			t.Errorf("input:%v\toutput:%v\texcept:%v\n", data.question, result, data.answer)
+	for i := 0; i < 10000; i++ {
+		for _, data := range cases {
+			result := numSimilarGroups(data.question)
+			if result != data.answer {
+				t.Errorf("input:%v\toutput:%v\texcept:%v\n", data.question, result, data.answer)
+			}
 		}
 	}
 }
