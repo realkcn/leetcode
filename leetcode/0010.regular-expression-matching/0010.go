@@ -31,19 +31,21 @@ func compile(pattern string) {
 			ch = anyMatchChar
 			fallthrough
 		default:
-			curNode := new(DFANode)
-			pPrev.matchNext = curNode
-			curNode.matchChar = ch
-			pPrev = curNode
+			if !(pPrev.matchChar < 0 && ch != anyMatchChar && pPrev.matchChar == ch) {
+				curNode := new(DFANode)
+				pPrev.matchNext = curNode
+				curNode.matchChar = ch
+				pPrev = curNode
+			}
 		}
 	}
 	pPrev.matchNext = &endNode
 	//优化一下，合并.*.* a*a*这类情况
-	for p := &startNode; p != &endNode; p = p.matchNext {
-		for p.matchChar < 0 && p.matchChar != anyMatchChar && p.matchChar == p.matchNext.matchChar {
-			p.matchNext = p.matchNext.matchNext
-		}
-	}
+	//for p := &startNode; p != &endNode; p = p.matchNext {
+	//	for p.matchChar < 0 && p.matchChar != anyMatchChar && p.matchChar == p.matchNext.matchChar {
+	//		p.matchNext = p.matchNext.matchNext
+	//	}
+	//}
 }
 
 func addNodeToSet(node *DFANode, nextNodeSet *nodeSet) bool {
